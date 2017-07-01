@@ -11,5 +11,8 @@ namespace GOOS_Sample.Services
     public interface IBudgetService
     {
         void Create(BudgetAddViewModel budgetAddViewModel);
+
+        event EventHandler Created;
+        event EventHandler Updated;
     }
 }

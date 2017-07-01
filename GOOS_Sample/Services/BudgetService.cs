@@ -29,15 +29,32 @@ namespace GOOS_Sample.Services
         /// <param name="model">The model.</param>
         public void Create(BudgetAddViewModel model)
         {
-            var budget = new Budgets() { Amount = model.Amount, YearMonth = model.Month };
-            this._budgetRepository.Save(budget);
-            //using (var goosDemoEntities = new GoosDemoEntities())
-            //{
-            //    var budget = new Budgets() { Amount = budgetAddViewModel.Amount, YearMonth = budgetAddViewModel.Month };
+            //var budget = new Budgets() { Amount = model.Amount, YearMonth = model.Month };
+            //this._budgetRepository.Save(budget);
 
-            //    goosDemoEntities.Budgets.Add(budget);
-            //    goosDemoEntities.SaveChanges();
-            //}
+
+            //var budget = new Budget() { Amount = model.Amount, YearMonth = model.Month };
+            //this._budgetRepository.Save(budget);
+
+            var budget = this._budgetRepository.Read(x => x.YearMonth == model.Month);
+            if (budget == null)
+            {
+                this._budgetRepository.Save(new Budgets() { Amount = model.Amount, YearMonth = model.Month });
+
+                var handler = this.Created;
+                handler?.Invoke(this, EventArgs.Empty);
+            }
+            else
+            {
+                budget.Amount = model.Amount;
+                this._budgetRepository.Save(budget);
+
+                var handler = this.Updated;
+                handler?.Invoke(this, EventArgs.Empty);
+            }
         }
+
+        public event EventHandler Created;
+        public event EventHandler Updated;
     }
 }
