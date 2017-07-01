@@ -14,26 +14,29 @@ namespace GOOS_SampleTests.PageObjects
     {
         public BudgetCreatePage(FluentTest test) : base(test)
         {
+            this.Url = $"{PageContext.Domain}/budget/add";
         }
 
         public BudgetCreatePage Amount(int amount)
         {
-            throw new NotImplementedException();
+            this.I.Enter(amount.ToString()).In("#amount");
+            return this;
         }
 
         public BudgetCreatePage Month(string yearMonth)
         {
-            throw new NotImplementedException();
+            this.I.Enter(yearMonth).In("#month");
+            return this;
         }
 
         public void AddBudget()
         {
-            throw new NotImplementedException();
+            this.I.Click("input[type=\"submit\"]");
         }
 
         public void ShouldDisplay(string message)
         {
-            throw new NotImplementedException();
+            this.I.Assert.Text(message).In("#message");
         }
     }
 }
