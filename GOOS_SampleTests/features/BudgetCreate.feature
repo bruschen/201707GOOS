@@ -1,6 +1,6 @@
 ﻿@web
 Feature: BudgetCreate
-
+@CleanTableBudgets
 Scenario: Add a budget successfully
         Given go to adding budget page
         When I add a buget 2000 for "2017-10"
