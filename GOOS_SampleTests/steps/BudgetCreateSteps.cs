@@ -18,12 +18,13 @@ namespace GOOS_SampleTests.steps
             this._budgetCreatePage= new BudgetCreatePage(this);
         }
 
-        [BeforeScenario()]
-        public void BeforeScenario()
-        {
-            //啟動瀏覽器-chrome
-            SeleniumWebDriver.Bootstrap(SeleniumWebDriver.Browser.Chrome);
-        }
+        //[BeforeScenario()]
+        //public void BeforeScenario()
+        //{
+        //    //若是要跑web測試，都會需要加入該Code
+        //    //啟動瀏覽器-chrome
+        //    SeleniumWebDriver.Bootstrap(SeleniumWebDriver.Browser.Chrome);
+        //}
 
         /// <summary>
         /// given 情境的設定
