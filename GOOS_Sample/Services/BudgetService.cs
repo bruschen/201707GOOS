@@ -8,7 +8,7 @@ namespace GOOS_Sample.Services
     using GOOS_Sample.DataModels;
     using GOOS_Sample.Models.ViewModels;
 
-    public class BudgetsService:IBudgetService
+    public class BudgetService:IBudgetService
     {
         public void Create(BudgetAddViewModel budgetAddViewModel)
         {

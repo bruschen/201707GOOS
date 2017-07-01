@@ -215,7 +215,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\BudgetsService.cs" />
+    <Compile Include="Services\BudgetService.cs" />
     <Compile Include="Services\IBudgetService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

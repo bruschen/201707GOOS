@@ -10,6 +10,7 @@ namespace GOOS_SampleTests.steps
 
     using GOOS_Sample.Controllers;
     using GOOS_Sample.Models.ViewModels;
+    using GOOS_Sample.Services;
 
     using GOOS_SampleTests.DataModelsForIntegrationTest;
 
@@ -20,10 +21,11 @@ namespace GOOS_SampleTests.steps
     {
         private BudgetController _budgetController;
 
+
         [BeforeScenario()]
         public void BeforeScenario()
         {
-            this._budgetController = new BudgetController();
+            this._budgetController = new BudgetController(new BudgetService());
         }
 
         [When(@"add a budget")]
