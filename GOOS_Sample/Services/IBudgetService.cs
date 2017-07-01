@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GOOS_Sample.Services
+{
+    using GOOS_Sample.Models.ViewModels;
+
+    public interface IBudgetService
+    {
+        void Create(BudgetAddViewModel budgetAddViewModel);
+    }
+}

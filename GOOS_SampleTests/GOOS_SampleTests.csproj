@@ -124,6 +124,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\BugdgetControllerTests.cs" />
     <Compile Include="DataModelsForIntegrationTest\Budget.cs">
       <DependentUpon>BudgetModel.tt</DependentUpon>
     </Compile>
@@ -197,9 +198,7 @@
       <Name>GOOS_Sample</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
