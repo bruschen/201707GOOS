@@ -13,21 +13,31 @@ namespace GOOS_Sample.Services
     {
         private IRepository<Budgets> _budgetRepository;
 
+        public BudgetService()
+        {
+
+        }
 
         public BudgetService(IRepository<Budgets> budgetRepository)
         {
-            _budgetRepository = budgetRepository;
+            this._budgetRepository = budgetRepository;
         }
 
-        public void Create(BudgetAddViewModel budgetAddViewModel)
+        /// <summary>
+        /// Creates the specified model.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        public void Create(BudgetAddViewModel model)
         {
-            using (var goosDemoEntities = new GoosDemoEntities())
-            {
-                var budget = new Budgets() { Amount = budgetAddViewModel.Amount, YearMonth = budgetAddViewModel.Month };
+            var budget = new Budgets() { Amount = model.Amount, YearMonth = model.Month };
+            this._budgetRepository.Save(budget);
+            //using (var goosDemoEntities = new GoosDemoEntities())
+            //{
+            //    var budget = new Budgets() { Amount = budgetAddViewModel.Amount, YearMonth = budgetAddViewModel.Month };
 
-                goosDemoEntities.Budgets.Add(budget);
-                goosDemoEntities.SaveChanges();
-            }
+            //    goosDemoEntities.Budgets.Add(budget);
+            //    goosDemoEntities.SaveChanges();
+            //}
         }
     }
 }

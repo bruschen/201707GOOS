@@ -2,9 +2,12 @@ using System.Web.Mvc;
 using Microsoft.Practices.Unity;
 using Unity.Mvc5;
 using GOOS_Sample.Services;
+using GOOS_Sample.Repository;
 
 namespace GOOS_Sample
 {
+    using GOOS_Sample.DataModels;
+
     public static class UnityConfig
     {
         public static void RegisterComponents()
@@ -15,6 +18,8 @@ namespace GOOS_Sample
             // it is NOT necessary to register your controllers
 
             // e.g. container.RegisterType<ITestService, TestService>();
+
+            container.RegisterType<IRepository<Budgets>, BudgetRepository>();
             container.RegisterType<IBudgetService, BudgetService>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
