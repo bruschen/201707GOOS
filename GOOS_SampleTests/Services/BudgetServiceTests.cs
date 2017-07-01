@@ -33,17 +33,25 @@ namespace GOOS_SampleTests.Services
         [TestMethod()]
         public void CreateTest_when_exist_record_should_update_budget()
         {
+
             this._budgetService = new BudgetService(this._budgetRepositoryStub);
 
             var budgetFromDb = new Budgets() { Amount = 999, YearMonth = "2017-02" };
+
             this._budgetRepositoryStub.Read(Arg.Any<Func<Budgets, bool>>())
                 .ReturnsForAnyArgs(budgetFromDb);
 
             var model = new BudgetAddViewModel { Amount = 2000, Month = "2017-02" };
+
+            var wasUpdated = false;
+            this._budgetService.Updated += (sender, args) => { wasUpdated = true; };
+
             this._budgetService.Create(model);
 
             this._budgetRepositoryStub.Received()
                 .Save(Arg.Is<Budgets>(x => x == budgetFromDb && x.Amount == 2000));
+
+            Assert.IsTrue(wasUpdated);
         }
     }
 }
