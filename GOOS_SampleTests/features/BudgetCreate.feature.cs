@@ -77,14 +77,44 @@ namespace GOOS_SampleTests.Features
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add a budget successfully", new string[] {
                         "CleanTableBudgets"});
-#line 4
-this.ScenarioSetup(scenarioInfo);
 #line 5
-        testRunner.Given("go to adding budget page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 6
-        testRunner.When("I add a buget 2000 for \"2017-10\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+        testRunner.Given("go to adding budget page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 7
+        testRunner.When("I add a buget 2000 for \"2017-10\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 8
         testRunner.Then("it should display \"added successfully\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Add a budget when there was existed a record of unique month")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "BudgetCreate")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("web")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("CleanTableBudgets")]
+        public virtual void AddABudgetWhenThereWasExistedARecordOfUniqueMonth()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add a budget when there was existed a record of unique month", new string[] {
+                        "CleanTableBudgets"});
+#line 12
+this.ScenarioSetup(scenarioInfo);
+#line 13
+        testRunner.Given("go to adding budget page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Amount",
+                        "YearMonth"});
+            table1.AddRow(new string[] {
+                        "999",
+                        "2017-10"});
+#line 14
+        testRunner.And("Budget table existed budgets", ((string)(null)), table1, "And ");
+#line 17
+        testRunner.When("I add a buget 2000 for \"2017-10\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 18
+        testRunner.Then("it should display \"updated successfully\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
