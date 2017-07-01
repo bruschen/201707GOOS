@@ -171,6 +171,7 @@
     <Compile Include="steps\BudgetControllerSteps.cs" />
     <Compile Include="steps\BudgetCreateSteps.cs" />
     <Compile Include="steps\common\CleanTableHooks.cs" />
+    <Compile Include="steps\common\DIContainerHooks.cs" />
     <Compile Include="steps\common\WebHooks.cs" />
   </ItemGroup>
   <ItemGroup>

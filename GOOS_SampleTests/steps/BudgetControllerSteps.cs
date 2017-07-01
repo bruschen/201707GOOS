@@ -13,6 +13,9 @@ namespace GOOS_SampleTests.steps
     using GOOS_Sample.Services;
 
     using GOOS_SampleTests.DataModelsForIntegrationTest;
+    using GOOS_SampleTests.steps.common;
+
+    using Microsoft.Practices.Unity;
 
     using TechTalk.SpecFlow.Assist;
 
@@ -25,7 +28,7 @@ namespace GOOS_SampleTests.steps
         [BeforeScenario()]
         public void BeforeScenario()
         {
-            this._budgetController = new BudgetController(new BudgetService());
+            this._budgetController= DIContainerHooks.UnityContainer.Resolve<BudgetController>();
         }
 
         [When(@"add a budget")]

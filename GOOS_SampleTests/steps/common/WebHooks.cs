@@ -8,11 +8,13 @@ namespace GOOS_SampleTests.steps.common
 {
     using FluentAutomation;
 
+    using GOOS_Sample.Services;
+
+    using Microsoft.Practices.Unity;
+
     [Binding]
     public sealed class WebHooks
     {
-        // For additional details on SpecFlow hooks see http://go.specflow.org/doc-hooks
-
         [BeforeFeature()]
         [Scope(Tag = "web")]
         public static void SetBrowser()
