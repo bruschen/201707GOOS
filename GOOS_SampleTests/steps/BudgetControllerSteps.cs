@@ -28,6 +28,7 @@ namespace GOOS_SampleTests.steps
         [BeforeScenario()]
         public void BeforeScenario()
         {
+            //從DI container內取得物件
             this._budgetController= DIContainerHooks.UnityContainer.Resolve<BudgetController>();
         }
 

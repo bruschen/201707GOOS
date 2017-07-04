@@ -165,6 +165,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BudgetCreate.feature</DependentUpon>
     </Compile>
+    <Compile Include="features\BudgetQuery.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BudgetQuery.feature</DependentUpon>
+    </Compile>
     <Compile Include="PageObjects\BudgetCreatePage.cs" />
     <Compile Include="PageObjects\PageContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -204,6 +209,10 @@
     <None Include="features\BudgetCreate.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>BudgetCreate.feature.cs</LastGenOutput>
+    </None>
+    <None Include="features\BudgetQuery.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>BudgetQuery.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

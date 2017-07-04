@@ -20,6 +20,7 @@ namespace GOOS_Sample
             // e.g. container.RegisterType<ITestService, TestService>();
 
             container.RegisterType<IRepository<Budgets>, BudgetRepository>();
+            //µù¥UService
             container.RegisterType<IBudgetService, BudgetService>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

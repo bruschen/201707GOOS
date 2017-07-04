@@ -10,12 +10,15 @@ namespace GOOS_Sample.Repository
     {
         public void Save(Budgets budget)
         {
+            #region -- 新增預算(V1) --
             //using (var dbcontext = new GoosDemoEntities())
             //{
             //    dbcontext.Budgets.Add(budget);
             //    dbcontext.SaveChanges();
             //}
+            #endregion
 
+            #region -- 新增預算(V2) 若存在則更新，不存在則新增 --
             using (var dbcontext = new GoosDemoEntities())
             {
                 var budgetFromDb = dbcontext.Budgets.FirstOrDefault(x => x.YearMonth == budget.YearMonth);
@@ -31,6 +34,7 @@ namespace GOOS_Sample.Repository
 
                 dbcontext.SaveChanges();
             }
+            #endregion
         }
 
         public Budgets Read(Func<Budgets, bool> predicate)

@@ -28,7 +28,7 @@ namespace GOOS_SampleTests.Controllers
             var model = new BudgetAddViewModel()
                             { Amount = 2000, Month = "2017-02" };
             var result = this._budgetController.Add(model);
-            budgetServiceStub.Received()
+            this.budgetServiceStub.Received()
                 .Create(Arg.Is<BudgetAddViewModel>(x => x.Amount == 2000 && x.Month == "2017-02"));
         }
     }

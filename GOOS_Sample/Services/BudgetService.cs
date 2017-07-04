@@ -29,14 +29,14 @@ namespace GOOS_Sample.Services
         /// <param name="model">The model.</param>
         public void Create(BudgetAddViewModel model)
         {
+            #region -- V1 存入DB --
             //var budget = new Budgets() { Amount = model.Amount, YearMonth = model.Month };
             //this._budgetRepository.Save(budget);
+            #endregion
 
-
-            //var budget = new Budget() { Amount = model.Amount, YearMonth = model.Month };
-            //this._budgetRepository.Save(budget);
 
             var budget = this._budgetRepository.Read(x => x.YearMonth == model.Month);
+            ////資料不存在
             if (budget == null)
             {
                 this._budgetRepository.Save(new Budgets() { Amount = model.Amount, YearMonth = model.Month });
@@ -44,6 +44,7 @@ namespace GOOS_Sample.Services
                 var handler = this.Created;
                 handler?.Invoke(this, EventArgs.Empty);
             }
+            ////資料已經存在
             else
             {
                 budget.Amount = model.Amount;
