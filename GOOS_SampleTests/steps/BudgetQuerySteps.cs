@@ -3,10 +3,18 @@ using TechTalk.SpecFlow;
 
 namespace GOOS_SampleTests.steps
 {
+    using System.Web.Mvc;
+
     using FluentAutomation;
+
+    using GOOS_Sample.Controllers;
+    using GOOS_Sample.Models.ViewModels;
+    using GOOS_Sample.Services;
 
     using GOOS_SampleTests.DataModelsForIntegrationTest;
     using GOOS_SampleTests.PageObjects;
+
+    using NSubstitute;
 
     using TechTalk.SpecFlow.Assist;
 
@@ -16,26 +24,19 @@ namespace GOOS_SampleTests.steps
     {
         private BudgetQueryPage _budgetQueryPage;
 
+        private BudgetController _budgetController;
+        private IBudgetService budgetServiceStub = Substitute.For<IBudgetService>();
+
         public BudgetQuerySteps()
         {
             this._budgetQueryPage = new BudgetQueryPage(this);
+            this._budgetController = new BudgetController(this.budgetServiceStub);
         }
 
         [Given(@"go to budget query page")]
         public void GivenGoToBudgetQueryPage()
         {
             this._budgetQueryPage.Go();
-        }
-
-        [Given(@"Budget table existed budget")]
-        public void GivenBudgetTableExistedBudget(Table table)
-        {
-            //var budgets = table.CreateSet<Budget>();
-            //using (var dbcontext = new NorthwindEntitiesForTest())
-            //{
-            //    dbcontext.Budgets.AddRange(budgets);
-            //    dbcontext.SaveChanges();
-            //}
         }
 
         [When(@"Query from ""(.*)"" to ""(.*)""")]
@@ -48,6 +49,22 @@ namespace GOOS_SampleTests.steps
         public void ThenShowBudget(Decimal amount)
         {
             this._budgetQueryPage.ShouldDisplayAmount(amount);
+        }
+
+        [When(@"query")]
+        public void WhenQuery(Table table)
+        {
+            var condition = table.CreateInstance<BudgetQueryViewModel>();
+            var result = this._budgetController.Query(condition);
+            ScenarioContext.Current.Set<ActionResult>(result);
+        }
+
+        [Then(@"ViewDataModel should be")]
+        public void ThenViewDataModelShouldBe(Table table)
+        {
+            var result = ScenarioContext.Current.Get<ActionResult>() as ViewResult;
+            var model = result.ViewData.Model as BudgetQueryViewModel;
+            table.CompareToInstance(model);
         }
     }
 }

@@ -69,31 +69,66 @@ namespace GOOS_SampleTests.Features
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Query Budget within single month")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Query Budget User Interface")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "BudgetQuery")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("Web")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("CleanTableBudgets")]
-        public virtual void QueryBudgetWithinSingleMonth()
+        public virtual void QueryBudgetUserInterface()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Query Budget within single month", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Query Budget User Interface", new string[] {
                         "CleanTableBudgets"});
 #line 5
 this.ScenarioSetup(scenarioInfo);
 #line 6
  testRunner.Given("go to budget query page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 7
+ testRunner.When("Query from \"2017-04-05\" to \"2017-04-14\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 8
+ testRunner.Then("show budget 10000.00", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Query budget within single month")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "BudgetQuery")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("Web")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("CleanTableBudgets")]
+        public virtual void QueryBudgetWithinSingleMonth()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Query budget within single month", new string[] {
+                        "CleanTableBudgets"});
+#line 11
+this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Amount",
                         "YearMonth"});
             table1.AddRow(new string[] {
-                        "30000",
+                        "60000",
                         "2017-04"});
-#line 7
- testRunner.And("Budget table existed budget", ((string)(null)), table1, "And ");
-#line 10
- testRunner.When("Query from \"2017-04-05\" to \"2017-04-14\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 11
- testRunner.Then("show budget 10000.00", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 12
+        testRunner.Given("Budget table existed budgets", ((string)(null)), table1, "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "StartDate",
+                        "EndDate"});
+            table2.AddRow(new string[] {
+                        "2017-04-05",
+                        "2017-04-14"});
+#line 15
+        testRunner.When("query", ((string)(null)), table2, "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "StartDate",
+                        "EndDate",
+                        "Amount"});
+            table3.AddRow(new string[] {
+                        "2017-04-05",
+                        "2017-04-14",
+                        "20000"});
+#line 18
+        testRunner.Then("ViewDataModel should be", ((string)(null)), table3, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
