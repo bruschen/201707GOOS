@@ -5,9 +5,13 @@ namespace GOOS_SampleTests.steps
 {
     using FluentAutomation;
 
+    using GOOS_SampleTests.DataModelsForIntegrationTest;
     using GOOS_SampleTests.PageObjects;
 
+    using TechTalk.SpecFlow.Assist;
+
     [Binding]
+    [Scope(Feature = "BudgetQuery")]
     public class BudgetQuerySteps: FluentTest
     {
         private BudgetQueryPage _budgetQueryPage;
@@ -23,11 +27,16 @@ namespace GOOS_SampleTests.steps
             this._budgetQueryPage.Go();
         }
 
-        //[Given(@"Budget table existed budget")]
-        //public void GivenBudgetTableExistedBudget(Table table)
-        //{
-        //    ScenarioContext.Current.Pending();
-        //}
+        [Given(@"Budget table existed budget")]
+        public void GivenBudgetTableExistedBudget(Table table)
+        {
+            //var budgets = table.CreateSet<Budget>();
+            //using (var dbcontext = new NorthwindEntitiesForTest())
+            //{
+            //    dbcontext.Budgets.AddRange(budgets);
+            //    dbcontext.SaveChanges();
+            //}
+        }
 
         [When(@"Query from ""(.*)"" to ""(.*)""")]
         public void WhenQueryFromTo(string startDate, string endDate)

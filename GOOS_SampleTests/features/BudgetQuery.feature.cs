@@ -72,11 +72,11 @@ namespace GOOS_SampleTests.Features
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Query Budget within single month")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "BudgetQuery")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("Web")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("CleanTableBudget")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("CleanTableBudgets")]
         public virtual void QueryBudgetWithinSingleMonth()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Query Budget within single month", new string[] {
-                        "CleanTableBudget"});
+                        "CleanTableBudgets"});
 #line 5
 this.ScenarioSetup(scenarioInfo);
 #line 6
@@ -84,7 +84,7 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Amount",
-                        "Month"});
+                        "YearMonth"});
             table1.AddRow(new string[] {
                         "30000",
                         "2017-04"});
