@@ -59,9 +59,27 @@ namespace GOOS_Sample.Services
         public event EventHandler Created;
         public event EventHandler Updated;
 
-        public int TotalBudget(Period period)
+        public decimal TotalBudget(Period period)
         {
-            return 20000;
+            var budgets = this._budgetRepository.ReadAll();
+            var budget = budgets.ElementAt(0);
+
+            ////取得指定月份的天數
+            var daysInBudgetMonth =
+                DateTime.DaysInMonth(
+                    Convert.ToInt16(budget.YearMonth.Split('-')[0]),
+                    Convert.ToInt16(budget.YearMonth.Split('-')[1]));
+
+            //每日預算
+            var dailyBudget = budget.Amount / daysInBudgetMonth;
+
+            //日期區間天數
+            var dayOfPeriod = new TimeSpan(period.EndDate.AddDays(1).Ticks - period.StartDate.Ticks).Days;
+
+            var periodOfBudget = dailyBudget * dayOfPeriod;
+
+
+            return periodOfBudget;
         }
     }
 }

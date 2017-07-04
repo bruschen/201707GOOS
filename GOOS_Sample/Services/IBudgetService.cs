@@ -17,7 +17,7 @@ namespace GOOS_Sample.Services
         event EventHandler Created;
         event EventHandler Updated;
 
-        int TotalBudget(Period period);
+        decimal TotalBudget(Period period);
     }
 
 }
