@@ -10,5 +10,7 @@ namespace GOOS_Sample.Repository
     {
         void Save(T entity);
         T Read(Func<T, bool> predicate);
+
+        IEnumerable<T> ReadAll();
     }
 }

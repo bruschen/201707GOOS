@@ -45,5 +45,10 @@ namespace GOOS_Sample.Repository
                 return firstBudget;
             }
         }
+
+        public IEnumerable<Budgets> ReadAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

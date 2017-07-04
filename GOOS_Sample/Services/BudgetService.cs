@@ -6,6 +6,7 @@ using System.Web;
 namespace GOOS_Sample.Services
 {
     using GOOS_Sample.DataModels;
+    using GOOS_Sample.Models;
     using GOOS_Sample.Models.ViewModels;
     using GOOS_Sample.Repository;
 
@@ -57,5 +58,10 @@ namespace GOOS_Sample.Services
 
         public event EventHandler Created;
         public event EventHandler Updated;
+
+        public int TotalBudget(Period period)
+        {
+            return 20000;
+        }
     }
 }

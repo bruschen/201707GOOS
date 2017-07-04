@@ -3,7 +3,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GOOS_SampleTests.Services
 {
+    using System.Collections.Generic;
+
+    using FluentAssertions;
+
     using GOOS_Sample.DataModels;
+    using GOOS_Sample.Models;
     using GOOS_Sample.Models.ViewModels;
     using GOOS_Sample.Repository;
     using GOOS_Sample.Services;
@@ -65,6 +70,18 @@ namespace GOOS_SampleTests.Services
             this._budgetRepositoryStub.Received()
                 .Save(Arg.Is<Budgets>(x => x == budgetFromDb && x.Amount == 2000));
             Assert.IsTrue(wasUpdated);
+        }
+
+        [TestMethod()]
+        public void TotalBudgetTest()
+        {
+            this._budgetService = new BudgetService(this._budgetRepositoryStub);
+            this._budgetRepositoryStub.ReadAll()
+                .ReturnsForAnyArgs(new List<Budgets> { new Budgets() { YearMonth = "2017-04", Amount = 9000 } });
+
+            var amount = this._budgetService.TotalBudget(new Period(new DateTime(2017, 4, 5), new DateTime(2017, 4, 14)));
+            var expected = 3000;
+            amount.ShouldBeEquivalentTo(expected);
         }
     }
 }

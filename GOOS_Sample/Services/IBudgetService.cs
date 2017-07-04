@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace GOOS_Sample.Services
 {
+    using GOOS_Sample.DataModels;
+    using GOOS_Sample.Models;
     using GOOS_Sample.Models.ViewModels;
 
     public interface IBudgetService
@@ -14,5 +16,8 @@ namespace GOOS_Sample.Services
 
         event EventHandler Created;
         event EventHandler Updated;
+
+        int TotalBudget(Period period);
     }
+
 }
