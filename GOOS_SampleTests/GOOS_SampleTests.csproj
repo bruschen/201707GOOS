@@ -171,11 +171,13 @@
       <DependentUpon>BudgetQuery.feature</DependentUpon>
     </Compile>
     <Compile Include="PageObjects\BudgetCreatePage.cs" />
+    <Compile Include="PageObjects\BudgetQueryPage.cs" />
     <Compile Include="PageObjects\PageContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BudgetServiceTests.cs" />
     <Compile Include="steps\BudgetControllerSteps.cs" />
     <Compile Include="steps\BudgetCreateSteps.cs" />
+    <Compile Include="steps\BudgetQuerySteps.cs" />
     <Compile Include="steps\common\CleanTableHooks.cs" />
     <Compile Include="steps\common\DIContainerHooks.cs" />
     <Compile Include="steps\common\InsertBudgetsTable.cs" />
