@@ -43,11 +43,29 @@ namespace GOOS_Sample.Extension
         /// <returns></returns>
         public static int GetDayOfPeriod(this Budgets budget, Period period)
         {
-            var endBoundary = period.EndDate.AddDays(1);
+            var endBoundary = period.EndDate;
+            if (endBoundary>budget.YearMonth.LastDay())
+            {
+                endBoundary = budget.YearMonth.LastDay();
+            }
+
+            //var endBoundary = period.EndDate.AddDays(1);
             var startBoundary = budget.GetStartBoundary(period);
 
             //日期區間天數
-            return new TimeSpan(endBoundary.Ticks - startBoundary.Ticks).Days;
+            return new TimeSpan(endBoundary.AddDays(1).Ticks - startBoundary.Ticks).Days;
+        }
+
+        private static DateTime LastDay(this string yearMonth)
+        {
+            int daysInMonth = GetDaysInBudgetMonth(yearMonth);
+            return DateTime.Parse($"{yearMonth}-{daysInMonth}");
+        }
+
+        private static int GetDaysInBudgetMonth(string yearMonth)
+        {
+            return DateTime.DaysInMonth(Convert.ToInt16(yearMonth.Split('-')[0]),
+                Convert.ToInt16(yearMonth.Split('-')[1]));
         }
 
         /// <summary>
@@ -74,9 +92,10 @@ namespace GOOS_Sample.Extension
         /// <param name="budget"></param>
         /// <param name="period"></param>
         /// <returns></returns>
-        public static decimal GetPeriodOfBudget(this Budgets budget, Period period)
+        public static decimal GetOverlappingAmount(this Budgets budget, Period period)
         {
             var dailyBudget = budget.GetDailyAmount();
+
             var dayOfPeriod = budget.GetDayOfPeriod(period);
 
             return dailyBudget * dayOfPeriod;

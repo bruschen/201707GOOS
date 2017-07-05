@@ -65,7 +65,7 @@ namespace GOOS_Sample.Services
 
         public decimal TotalBudget(Period period)
         {
-            return this._budgetRepository.ReadAll().ElementAt(0).GetPeriodOfBudget(period);
+            return this._budgetRepository.ReadAll().ElementAt(0).GetOverlappingAmount(period);
         }
     }
 }
