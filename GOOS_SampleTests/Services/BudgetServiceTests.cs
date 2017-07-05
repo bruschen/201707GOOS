@@ -102,5 +102,19 @@ namespace GOOS_SampleTests.Services
             amount.ShouldBeEquivalentTo(expected);
         }
 
+        /// <summary>
+        /// Totals the budget test period end date over single month but only one month budget.
+        /// </summary>
+        [TestMethod]
+        public void TotalBudgetTest_Period_EndDate_over_single_month_but_only_one_month_budget()
+        {
+            this._budgetService = new BudgetService(this._budgetRepositoryStub);
+            this._budgetRepositoryStub.ReadAll().ReturnsForAnyArgs(new List<Budgets> { new Budgets() { YearMonth = "2017-04", Amount = 9000 } });
+
+            var amount = this._budgetService.TotalBudget(new Period(new DateTime(2017, 4, 21), new DateTime(2017, 5, 10)));
+            var expected = 3000;
+
+            amount.ShouldBeEquivalentTo(expected);
+        }
     }
 }
