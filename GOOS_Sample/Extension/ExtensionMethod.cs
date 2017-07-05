@@ -29,10 +29,7 @@ namespace GOOS_Sample.Extension
         /// <returns></returns>
         private static int GetDaysInBudgetMonth(this Budgets budget)
         {
-            ////取得指定月份的天數
-            return DateTime.DaysInMonth(
-                Convert.ToInt16(budget.YearMonth.Split('-')[0]),
-                Convert.ToInt16(budget.YearMonth.Split('-')[1]));
+            return GetDaysInBudgetMonth(budget.YearMonth);
         }
 
         /// <summary>
@@ -45,10 +42,8 @@ namespace GOOS_Sample.Extension
         {
             var endBoundary = budget.GetEndBoundary(period);
 
-            //var endBoundary = period.EndDate.AddDays(1);
             var startBoundary = budget.GetStartBoundary(period);
 
-            //日期區間天數
             return new TimeSpan(endBoundary.AddDays(1).Ticks - startBoundary.Ticks).Days;
         }
 
@@ -67,7 +62,8 @@ namespace GOOS_Sample.Extension
 
         private static int GetDaysInBudgetMonth(string yearMonth)
         {
-            return DateTime.DaysInMonth(Convert.ToInt16(yearMonth.Split('-')[0]),
+            return DateTime.DaysInMonth(
+                Convert.ToInt16(yearMonth.Split('-')[0]),
                 Convert.ToInt16(yearMonth.Split('-')[1]));
         }
 
