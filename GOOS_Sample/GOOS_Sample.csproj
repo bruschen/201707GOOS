@@ -207,6 +207,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GoosDemoModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Extension\ExtensionMethod.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

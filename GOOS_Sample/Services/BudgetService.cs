@@ -6,11 +6,12 @@ using System.Web;
 namespace GOOS_Sample.Services
 {
     using GOOS_Sample.DataModels;
+    using GOOS_Sample.Extension;
     using GOOS_Sample.Models;
     using GOOS_Sample.Models.ViewModels;
     using GOOS_Sample.Repository;
 
-    public class BudgetService:IBudgetService
+    public class BudgetService : IBudgetService
     {
         private IRepository<Budgets> _budgetRepository;
 
@@ -31,8 +32,10 @@ namespace GOOS_Sample.Services
         public void Create(BudgetAddViewModel model)
         {
             #region -- V1 存入DB --
+
             //var budget = new Budgets() { Amount = model.Amount, YearMonth = model.Month };
             //this._budgetRepository.Save(budget);
+
             #endregion
 
 
@@ -57,29 +60,12 @@ namespace GOOS_Sample.Services
         }
 
         public event EventHandler Created;
+
         public event EventHandler Updated;
 
         public decimal TotalBudget(Period period)
         {
-            var budgets = this._budgetRepository.ReadAll();
-            var budget = budgets.ElementAt(0);
-
-            ////取得指定月份的天數
-            var daysInBudgetMonth =
-                DateTime.DaysInMonth(
-                    Convert.ToInt16(budget.YearMonth.Split('-')[0]),
-                    Convert.ToInt16(budget.YearMonth.Split('-')[1]));
-
-            //每日預算
-            var dailyBudget = budget.Amount / daysInBudgetMonth;
-
-            //日期區間天數
-            var dayOfPeriod = new TimeSpan(period.EndDate.AddDays(1).Ticks - period.StartDate.Ticks).Days;
-
-            var periodOfBudget = dailyBudget * dayOfPeriod;
-
-
-            return periodOfBudget;
+            return this._budgetRepository.ReadAll().ElementAt(0).GetPeriodOfBudget(period);
         }
     }
 }
