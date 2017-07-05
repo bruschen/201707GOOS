@@ -97,7 +97,7 @@ namespace GOOS_SampleTests.Services
                 .ReturnsForAnyArgs(new List<Budgets> { new Budgets() { YearMonth = "2017-04", Amount = 9000 } });
 
             var amount = this._budgetService.TotalBudget(
-                new Period(new DateTime(2017, 3, 5), new DateTime(2017, 4, 14)));
+                new Period(new DateTime(2017, 3, 5), new DateTime(2017, 4, 10)));
             var expected = 3000;
             amount.ShouldBeEquivalentTo(expected);
         }

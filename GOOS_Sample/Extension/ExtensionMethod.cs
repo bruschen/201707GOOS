@@ -30,12 +30,29 @@ namespace GOOS_Sample.Extension
         /// <summary>
         /// Gets the day of period.
         /// </summary>
+        /// <param name="budget"></param>
         /// <param name="period">The period.</param>
         /// <returns></returns>
-        public static int GetDayOfPeriod(this Period period)
+        public static int GetDayOfPeriod(Budgets budget, Period period)
         {
+
+            var endBoundary = period.EndDate.AddDays(1);
+            var startBoundary = period.StartDate;
+
+            DateTime yearMonthFirstDate = budget.YearMonth.FirstDay();
+
+            if (startBoundary < yearMonthFirstDate)
+            {
+                startBoundary = yearMonthFirstDate;
+            }
+
             //日期區間天數
-            return new TimeSpan(period.EndDate.AddDays(1).Ticks - period.StartDate.Ticks).Days;
+            return new TimeSpan(endBoundary.Ticks - startBoundary.Ticks).Days;
+        }
+
+        private static DateTime FirstDay(this string yearMonth)
+        {
+            return DateTime.Parse($"{yearMonth}-01");
         }
 
         /// <summary>
@@ -47,7 +64,7 @@ namespace GOOS_Sample.Extension
         public static decimal GetPeriodOfBudget(this Budgets budget, Period period)
         {
             var dailyBudget = budget.GetDailyAmount();
-            var dayOfPeriod = period.GetDayOfPeriod();
+            var dayOfPeriod = GetDayOfPeriod(budget,period);
 
             return dailyBudget * dayOfPeriod;
         }
