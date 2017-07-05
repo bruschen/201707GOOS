@@ -17,14 +17,22 @@ namespace GOOS_Sample.Extension
         /// <returns></returns>
         public static decimal GetDailyAmount(this Budgets budget)
         {
+            //每日預算
+            var dailyBudget = budget.Amount / budget.GetDaysInBudgetMonth();
+            return dailyBudget;
+        }
+
+        /// <summary>
+        /// 取得指定月份天數
+        /// </summary>
+        /// <param name="budget">The budget.</param>
+        /// <returns></returns>
+        private static int GetDaysInBudgetMonth(this Budgets budget)
+        {
             ////取得指定月份的天數
-            var daysInBudgetMonth = DateTime.DaysInMonth(
+            return DateTime.DaysInMonth(
                 Convert.ToInt16(budget.YearMonth.Split('-')[0]),
                 Convert.ToInt16(budget.YearMonth.Split('-')[1]));
-
-            //每日預算
-            var dailyBudget = budget.Amount / daysInBudgetMonth;
-            return dailyBudget;
         }
 
         /// <summary>
@@ -33,21 +41,26 @@ namespace GOOS_Sample.Extension
         /// <param name="budget"></param>
         /// <param name="period">The period.</param>
         /// <returns></returns>
-        public static int GetDayOfPeriod(Budgets budget, Period period)
+        public static int GetDayOfPeriod(this Budgets budget, Period period)
         {
-
             var endBoundary = period.EndDate.AddDays(1);
-            var startBoundary = period.StartDate;
-
-            DateTime yearMonthFirstDate = budget.YearMonth.FirstDay();
-
-            if (startBoundary < yearMonthFirstDate)
-            {
-                startBoundary = yearMonthFirstDate;
-            }
+            var startBoundary = budget.GetStartBoundary(period);
 
             //日期區間天數
             return new TimeSpan(endBoundary.Ticks - startBoundary.Ticks).Days;
+        }
+
+        /// <summary>
+        /// 取得預算月份起始日
+        /// </summary>
+        /// <param name="budget">The budget.</param>
+        /// <param name="period">The period.</param>
+        /// <returns></returns>
+        private static DateTime GetStartBoundary(this Budgets budget, Period period)
+        {
+            var firstDay = budget.YearMonth.FirstDay();
+
+            return period.StartDate < firstDay ? firstDay : period.StartDate;
         }
 
         private static DateTime FirstDay(this string yearMonth)
@@ -64,7 +77,7 @@ namespace GOOS_Sample.Extension
         public static decimal GetPeriodOfBudget(this Budgets budget, Period period)
         {
             var dailyBudget = budget.GetDailyAmount();
-            var dayOfPeriod = GetDayOfPeriod(budget,period);
+            var dayOfPeriod = budget.GetDayOfPeriod(period);
 
             return dailyBudget * dayOfPeriod;
         }
