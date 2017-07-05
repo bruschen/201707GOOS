@@ -43,17 +43,20 @@ namespace GOOS_Sample.Extension
         /// <returns></returns>
         public static int GetDayOfPeriod(this Budgets budget, Period period)
         {
-            var endBoundary = period.EndDate;
-            if (endBoundary>budget.YearMonth.LastDay())
-            {
-                endBoundary = budget.YearMonth.LastDay();
-            }
+            var endBoundary = budget.GetEndBoundary(period);
 
             //var endBoundary = period.EndDate.AddDays(1);
             var startBoundary = budget.GetStartBoundary(period);
 
             //日期區間天數
             return new TimeSpan(endBoundary.AddDays(1).Ticks - startBoundary.Ticks).Days;
+        }
+
+        private static DateTime GetEndBoundary(this Budgets budget, Period period)
+        {
+            var lastDay = budget.YearMonth.LastDay();
+
+            return (period.EndDate > lastDay)? lastDay : period.EndDate;
         }
 
         private static DateTime LastDay(this string yearMonth)
