@@ -141,6 +141,42 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Query budget within 3 month")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "BudgetQuery")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("Web")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("CleanTableBudgets")]
+        public virtual void QueryBudgetWithin3Month()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Query budget within 3 month", new string[] {
+                        "CleanTableBudgets"});
+#line 27
+this.ScenarioSetup(scenarioInfo);
+#line 28
+        testRunner.Given("go to budget query page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Amount",
+                        "YearMonth"});
+            table5.AddRow(new string[] {
+                        "6200",
+                        "2017-03"});
+            table5.AddRow(new string[] {
+                        "9000",
+                        "2017-04"});
+            table5.AddRow(new string[] {
+                        "3100",
+                        "2017-05"});
+#line 29
+        testRunner.And("Budget table existed budgets", ((string)(null)), table5, "And ");
+#line 34
+        testRunner.When("Query from \"2017-03-22\" to \"2017-05-05\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 35
+        testRunner.Then("show budget 11500.00", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore
