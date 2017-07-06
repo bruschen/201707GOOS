@@ -166,11 +166,11 @@ namespace GOOS_SampleTests.Services
         [TestMethod]
         public void TotalBudgetTest_budget_without_overlapping_with_period()
         {
-            this._budgetService = new BudgetService(_budgetRepositoryStub);
+            this._budgetService = new BudgetService(this._budgetRepositoryStub);
             this._budgetRepositoryStub.ReadAll()
                 .ReturnsForAnyArgs(new List<Budgets>
                                        {
-                                           new Budgets() { YearMonth = "2018-03", Amount = 6200 }
+                                           new Budgets() { YearMonth = "2018-04", Amount = 6200 }
                                        });
 
             var amount = this._budgetService.TotalBudget(new Period(new DateTime(2017, 3, 22), new DateTime(2017, 5, 5)));
