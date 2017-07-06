@@ -8,6 +8,7 @@ namespace GOOS_SampleTests.steps
     using FluentAutomation;
 
     using GOOS_Sample.Controllers;
+    using GOOS_Sample.Models;
     using GOOS_Sample.Models.ViewModels;
     using GOOS_Sample.Services;
 
@@ -55,11 +56,13 @@ namespace GOOS_SampleTests.steps
         public void WhenQuery(Table table)
         {
             var condition = table.CreateInstance<BudgetQueryViewModel>();
+            this.budgetServiceStub.TotalBudget(new Period(new DateTime(2017, 4, 5), new DateTime(2017, 4, 14)))
+                .ReturnsForAnyArgs(20000);
             var result = this._budgetController.Query(condition);
             ScenarioContext.Current.Set<ActionResult>(result);
         }
 
-        [Then(@"ViewDataModel should be")]
+        [Then(@"ViewData.Model should be")]
         public void ThenViewDataModelShouldBe(Table table)
         {
             var result = ScenarioContext.Current.Get<ActionResult>() as ViewResult;

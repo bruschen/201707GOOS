@@ -2,10 +2,14 @@
 Feature: BudgetQuery
 
 @CleanTableBudgets
-Scenario: Query Budget User Interface
-	Given go to budget query page
-	When Query from "2017-04-05" to "2017-04-14"
-	Then show budget 10000.00
+Scenario: Query budget within single month UI
+        Given go to budget query page
+        And Budget table existed budgets
+        | Amount | YearMonth |
+        | 30000  | 2017-04   |
+        When Query from "2017-04-05" to "2017-04-14"
+        Then show budget 10000.00
+
 
 @CleanTableBudgets
 Scenario: Query budget within single month
@@ -15,6 +19,6 @@ Scenario: Query budget within single month
         When query
         | StartDate  | EndDate    |
         | 2017-04-05 | 2017-04-14 |
-        Then ViewDataModel should be
+        Then ViewData.Model should be
         | StartDate  | EndDate    | Amount |
         | 2017-04-05 | 2017-04-14 | 20000  |
