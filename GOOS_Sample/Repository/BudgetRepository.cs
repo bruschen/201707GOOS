@@ -48,7 +48,10 @@ namespace GOOS_Sample.Repository
 
         public IEnumerable<Budgets> ReadAll()
         {
-            throw new NotImplementedException();
+            using (var dbcontext = new GoosDemoEntities())
+            {
+                return dbcontext.Budgets.ToList();
+            }
         }
     }
 }
