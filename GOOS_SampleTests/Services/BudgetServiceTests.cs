@@ -126,12 +126,41 @@ namespace GOOS_SampleTests.Services
                                                                            new Budgets() { YearMonth = "2017-03", Amount = 3100 },
                                                                            new Budgets() { YearMonth = "2017-04", Amount = 9000 }
                                                                        });
-            
+
             var amount = this._budgetService.TotalBudget(new Period(new DateTime(2017, 3, 22), new DateTime(2017, 4, 30)));
             var excepted = 10000;
 
             amount.ShouldBeEquivalentTo(excepted);
         }
 
+        [TestMethod]
+        public void TotalBudgetTest_Period_EndDate_over_month_when_two_months_budget()
+        {
+            this._budgetService = new BudgetService(_budgetRepositoryStub);
+            this._budgetRepositoryStub.ReadAll()
+                .ReturnsForAnyArgs(new List<Budgets>
+                                       {
+                                           new Budgets() { YearMonth = "2017-04", Amount = 9000 },
+                                           new Budgets() { YearMonth = "2017-05", Amount = 3100 },
+                                       });
+            var amount = this._budgetService.TotalBudget(new Period(new DateTime(2017, 4, 1), new DateTime(2017, 5, 5)));
+            var expected = 9500;
+            amount.ShouldBeEquivalentTo(expected);
+        }
+        [TestMethod]
+        public void TotalBudgetTest_Period_over_month_when_3_months_budget()
+        {
+            this._budgetService = new BudgetService(_budgetRepositoryStub);
+            this._budgetRepositoryStub.ReadAll()
+                .ReturnsForAnyArgs(new List<Budgets>
+                                       {
+                                           new Budgets() { YearMonth = "2017-03", Amount = 6200 },
+                                           new Budgets() { YearMonth = "2017-04", Amount = 9000 },
+                                           new Budgets() { YearMonth = "2017-05", Amount = 3100 },
+                                       });
+            var amount = this._budgetService.TotalBudget(new Period(new DateTime(2017, 3, 22), new DateTime(2017, 5, 5)));
+            var expected = 11500;
+            amount.ShouldBeEquivalentTo(expected);
+        }
     }
 }

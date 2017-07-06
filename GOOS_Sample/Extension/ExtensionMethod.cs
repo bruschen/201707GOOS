@@ -40,10 +40,13 @@ namespace GOOS_Sample.Extension
         /// <returns></returns>
         public static int GetDayOfPeriod(this Budgets budget, Period period)
         {
+            ////取得該月預算結算日
             var endBoundary = budget.GetEndBoundary(period);
 
+            ////取得該月預算起算日
             var startBoundary = budget.GetStartBoundary(period);
 
+            ////計算該月預算天數
             return new TimeSpan(endBoundary.AddDays(1).Ticks - startBoundary.Ticks).Days;
         }
 
@@ -93,8 +96,10 @@ namespace GOOS_Sample.Extension
         /// <returns></returns>
         public static decimal GetOverlappingAmount(this Budgets budget, Period period)
         {
+            ////取得該月每日預算
             var dailyBudget = budget.GetDailyAmount();
 
+            //計算該月預算
             var dayOfPeriod = budget.GetDayOfPeriod(period);
 
             return dailyBudget * dayOfPeriod;
