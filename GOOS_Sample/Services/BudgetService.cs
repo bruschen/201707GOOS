@@ -43,20 +43,39 @@ namespace GOOS_Sample.Services
             ////資料不存在
             if (budget == null)
             {
-                this._budgetRepository.Save(new Budgets() { Amount = model.Amount, YearMonth = model.Month });
-
-                var handler = this.Created;
-                handler?.Invoke(this, EventArgs.Empty);
+                this.AddBudget(model);
             }
             ////資料已經存在
             else
             {
-                budget.Amount = model.Amount;
-                this._budgetRepository.Save(budget);
-
-                var handler = this.Updated;
-                handler?.Invoke(this, EventArgs.Empty);
+                this.UpdateBudget(model, budget);
             }
+        }
+
+        /// <summary>
+        /// Updates the budget.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <param name="budget">The budget.</param>
+        private void UpdateBudget(BudgetAddViewModel model, Budgets budget)
+        {
+            budget.Amount = model.Amount;
+            this._budgetRepository.Save(budget);
+
+            var handler = this.Updated;
+            handler?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Adds the budget.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        private void AddBudget(BudgetAddViewModel model)
+        {
+            this._budgetRepository.Save(new Budgets() { Amount = model.Amount, YearMonth = model.Month });
+
+            var handler = this.Created;
+            handler?.Invoke(this, EventArgs.Empty);
         }
 
         public event EventHandler Created;

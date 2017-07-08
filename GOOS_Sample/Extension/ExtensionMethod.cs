@@ -96,13 +96,8 @@ namespace GOOS_Sample.Extension
         /// <returns></returns>
         public static decimal GetOverlappingAmount(this Budgets budget, Period period)
         {
-            ////取得該月每日預算
-            var dailyBudget = budget.GetDailyAmount();
-
-            //計算該月預算
-            var dayOfPeriod = budget.GetDayOfPeriod(period);
-
-            return dailyBudget * dayOfPeriod;
+            ////取得該月每日預算*天數
+            return budget.GetDailyAmount() * budget.GetDayOfPeriod(period);
         }
     }
 }
