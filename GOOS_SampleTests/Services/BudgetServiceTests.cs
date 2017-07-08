@@ -31,7 +31,7 @@ namespace GOOS_SampleTests.Services
         [TestMethod()]
         public void CreateTest_should_invoke_repository_one_time()
         {
-            this._budgetService = new BudgetService(this._budgetRepositoryStub);
+            this.InjectStubToBudgetService();
             //確認event是否有被正確觸發
             var wasCreate = false;
             this._budgetService.Created += (sender, e) => { wasCreate = true; };
@@ -44,13 +44,16 @@ namespace GOOS_SampleTests.Services
             Assert.IsTrue(wasCreate);
         }
 
+        private void InjectStubToBudgetService()
+        {
+            this._budgetService = new BudgetService(this._budgetRepositoryStub);
+        }
 
         [TestMethod()]
         public void CreateTest_when_exist_record_should_update_budget()
         {
             #region -- 加入exist record to db --
-
-            this._budgetService = new BudgetService(this._budgetRepositoryStub);
+            this.InjectStubToBudgetService();
             var budgetFromDb = new Budgets() { Amount = 999, YearMonth = "2017-02" };
 
             this._budgetRepositoryStub.Read(Arg.Any<Func<Budgets, bool>>()).ReturnsForAnyArgs(budgetFromDb);
@@ -83,10 +86,12 @@ namespace GOOS_SampleTests.Services
             this._budgetRepositoryStub.ReadAll()
                 .ReturnsForAnyArgs(new List<Budgets> { new Budgets() { YearMonth = "2017-04", Amount = 9000 } });
 
-            var amount = this._budgetService.TotalBudget(
-                new Period(new DateTime(2017, 4, 5), new DateTime(2017, 4, 14)));
-            var expected = 3000;
-            amount.ShouldBeEquivalentTo(expected);
+            this.AssertTotalAmount(3000, this._budgetService.TotalBudget(new Period(new DateTime(2017, 4, 5), new DateTime(2017, 4, 14))));
+        }
+
+        private void AssertTotalAmount(int expectedAmount, decimal amount)
+        {
+            amount.ShouldBeEquivalentTo(expectedAmount);
         }
 
         [TestMethod]
@@ -96,10 +101,7 @@ namespace GOOS_SampleTests.Services
             this._budgetRepositoryStub.ReadAll()
                 .ReturnsForAnyArgs(new List<Budgets> { new Budgets() { YearMonth = "2017-04", Amount = 9000 } });
 
-            var amount = this._budgetService.TotalBudget(
-                new Period(new DateTime(2017, 3, 5), new DateTime(2017, 4, 10)));
-            var expected = 3000;
-            amount.ShouldBeEquivalentTo(expected);
+            this.AssertTotalAmount(3000, this._budgetService.TotalBudget(new Period(new DateTime(2017, 3, 5), new DateTime(2017, 4, 10))));
         }
 
         /// <summary>
@@ -111,10 +113,7 @@ namespace GOOS_SampleTests.Services
             this._budgetService = new BudgetService(this._budgetRepositoryStub);
             this._budgetRepositoryStub.ReadAll().ReturnsForAnyArgs(new List<Budgets> { new Budgets() { YearMonth = "2017-04", Amount = 9000 } });
 
-            var amount = this._budgetService.TotalBudget(new Period(new DateTime(2017, 4, 21), new DateTime(2017, 5, 10)));
-            var expected = 3000;
-
-            amount.ShouldBeEquivalentTo(expected);
+            this.AssertTotalAmount(3000, this._budgetService.TotalBudget(new Period(new DateTime(2017, 4, 21), new DateTime(2017, 5, 10))));
         }
 
         [TestMethod]
@@ -127,10 +126,7 @@ namespace GOOS_SampleTests.Services
                                                                            new Budgets() { YearMonth = "2017-04", Amount = 9000 }
                                                                        });
 
-            var amount = this._budgetService.TotalBudget(new Period(new DateTime(2017, 3, 22), new DateTime(2017, 4, 30)));
-            var excepted = 10000;
-
-            amount.ShouldBeEquivalentTo(excepted);
+            this.AssertTotalAmount(1000, this._budgetService.TotalBudget(new Period(new DateTime(2017, 3, 22), new DateTime(2017, 4, 30))));
         }
 
         [TestMethod]
@@ -143,9 +139,8 @@ namespace GOOS_SampleTests.Services
                                            new Budgets() { YearMonth = "2017-04", Amount = 9000 },
                                            new Budgets() { YearMonth = "2017-05", Amount = 3100 },
                                        });
-            var amount = this._budgetService.TotalBudget(new Period(new DateTime(2017, 4, 1), new DateTime(2017, 5, 5)));
-            var expected = 9500;
-            amount.ShouldBeEquivalentTo(expected);
+
+            this.AssertTotalAmount(9500, this._budgetService.TotalBudget(new Period(new DateTime(2017, 4, 1), new DateTime(2017, 5, 5))));
         }
         [TestMethod]
         public void TotalBudgetTest_Period_over_month_when_3_months_budget()
@@ -158,9 +153,8 @@ namespace GOOS_SampleTests.Services
                                            new Budgets() { YearMonth = "2017-04", Amount = 9000 },
                                            new Budgets() { YearMonth = "2017-05", Amount = 3100 },
                                        });
-            var amount = this._budgetService.TotalBudget(new Period(new DateTime(2017, 3, 22), new DateTime(2017, 5, 5)));
-            var expected = 11500;
-            amount.ShouldBeEquivalentTo(expected);
+
+            this.AssertTotalAmount(11500, this._budgetService.TotalBudget(new Period(new DateTime(2017, 3, 22), new DateTime(2017, 5, 5))));
         }
 
         [TestMethod]
@@ -173,10 +167,7 @@ namespace GOOS_SampleTests.Services
                                            new Budgets() { YearMonth = "2018-04", Amount = 6200 }
                                        });
 
-            var amount = this._budgetService.TotalBudget(new Period(new DateTime(2017, 3, 22), new DateTime(2017, 5, 5)));
-            var expected = 0;
-
-            amount.ShouldBeEquivalentTo(expected);
+            this.AssertTotalAmount(0, this._budgetService.TotalBudget(new Period(new DateTime(2017, 3, 22), new DateTime(2017, 5, 5))));
         }
     }
 }
